@@ -1,3 +1,4 @@
+
 //package othelloMultiplayer;
 
 import java.io.Writer;
@@ -26,14 +27,26 @@ public class Monitor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
 
+	private void sendSystemMsg(String msg) {
+		try {
+			for (ThreadClient client : clients.keySet()) {
+				Writer out = clients.get(client);
+				out.write("S:" + msg + "\n");
+				out.flush();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public synchronized void addClient(ThreadClient threadClient, Writer out) {
 		clients.put(threadClient, out);
+		sendSystemMsg(clients.size() + "");
 		System.out.println("Connected clients: " + clients.size());
 	}
-	
+
 	public void interruptAll() {
 		for (ThreadClient client : clients.keySet()) {
 			client.interrupt();

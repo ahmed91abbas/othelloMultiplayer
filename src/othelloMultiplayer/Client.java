@@ -73,9 +73,11 @@ public class Client {
 					dialog.dispose();
 //					ChatClient cc = new ChatClient(IPJta.getText(), Integer.parseInt(portJta.getText()));
 					ChatClient cc = new ChatClient("localhost", 30000);
-//					while (cc.getNbrConnected() != 2) {
-//						Thread.sleep(10);
-//					}
+					if (cc.getNbrConnected() < 2)
+						System.out.println("Waiting for player 2 to connect...");
+					while (cc.getNbrConnected() != 2) {
+						Thread.sleep(200);
+					}
 					String color = null;
 					while(color == null) {
 						color = cc.getColor();
@@ -100,15 +102,5 @@ public class Client {
 
 	public static void main(String[] args) {
 		Client client = new Client();
-//		try{
-//		 System.out.println("starting the test");
-//		 ChatClient cc = new ChatClient("localhost", 30000);
-//		 cc.sendMsg("test test test");
-//		 cc.sendMsg("m: test test test");
-//		 cc.sendMsg("e: test test test");
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-
 	}
 }

@@ -21,7 +21,6 @@ public class ChatClient {
 		color = null;
 		nbrConnected = 0;
 		out = null;
-		BufferedReader stdIn = null;
 		BufferedReader in = null;
 		Socket client = new Socket(machine, portNbr);
 		out = new PrintWriter(client.getOutputStream(), true);
@@ -55,8 +54,7 @@ public class ChatClient {
 							System.out.println(msgs[i]);
 						}
 						firstMsg = false;
-					} 
-					else {
+					} else {
 						String flag = out.substring(0, 2);
 						if (flag.equalsIgnoreCase(("M:"))) {
 							String move = out.substring(2);
@@ -64,10 +62,11 @@ public class ChatClient {
 							board.makeMove(move);
 						} else if (flag.equalsIgnoreCase(("T:"))) {
 							System.out.println("Opponent says: " + out.substring(2));
+						} else if (flag.equalsIgnoreCase(("S:"))) {
+							nbrConnected = Integer.parseInt(out.substring(2));
 						}
 					}
 				}
-				System.exit(1);
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.exit(1);
@@ -91,7 +90,7 @@ public class ChatClient {
 			try {
 				String userInput;
 				while ((userInput = stdIn.readLine()) != null && !client.isClosed()) {
-					out.println("T:"  + userInput);
+					out.println("T:" + userInput);
 					out.flush();
 				}
 				System.exit(1);
@@ -109,7 +108,7 @@ public class ChatClient {
 	public String getColor() {
 		return color;
 	}
-	
+
 	public void setBoard(Othello othello) {
 		board = othello;
 	}
