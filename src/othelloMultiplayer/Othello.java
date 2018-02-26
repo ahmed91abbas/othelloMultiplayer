@@ -1,4 +1,4 @@
-package othelloMultiplayer;
+//package othelloMultiplayer;
 
 import java.awt.Color;
 import java.awt.Dimension;

@@ -18,7 +18,7 @@ public class Monitor {
 		} else {
 			String flag = msg.substring(0, 2);
 			if (flag.equalsIgnoreCase(("M:"))) {
-				sendMsgToAll(msg.substring(2));
+				sendMsg(msg.substring(2), client);
 			} else if (flag.equalsIgnoreCase(("E:"))) {
 				echoMsg(msg.substring(2), client);
 			} else if (flag.equalsIgnoreCase(("Q:"))) {
@@ -45,7 +45,7 @@ public class Monitor {
 		}
 	}
 
-	private void sendMsgToAll(String msg) {
+	private void sendMsg(String msg, ThreadClient sender) {
 		try {
 			for (ThreadClient client : clients.keySet()) {
 				Writer out = clients.get(client);
