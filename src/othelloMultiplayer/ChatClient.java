@@ -12,8 +12,10 @@ public class ChatClient {
 	private PrintWriter out;
 	private String color;
 	private int nbrConnected;
+	private boolean firstMsg;
 
-	public ChatClient(String machine, int portNbr) throws UnknownHostException, IOException{
+	public ChatClient(String machine, int portNbr) throws UnknownHostException, IOException {
+		firstMsg = true;
 		color = null;
 		nbrConnected = 0;
 		out = null;
@@ -31,7 +33,7 @@ public class ChatClient {
 		out.flush();
 	}
 
-	public static class readerThread extends Thread {
+	public class readerThread extends Thread {
 		private BufferedReader in;
 
 		public readerThread(BufferedReader in) {
@@ -43,16 +45,33 @@ public class ChatClient {
 			try {
 				String out;
 				while (!isInterrupted() && (out = in.readLine()) != null) {
-					System.out.println("    " + out);
+					if (firstMsg) {
+						String[] msgs = out.split(";");
+						color = msgs[0];
+						nbrConnected = Integer.parseInt(msgs[1]);
+						for (int i = 2; i < msgs.length; i++) {
+							System.out.println(msgs[i]);
+						}
+						firstMsg = false;
+					} 
+					else {
+						String flag = out.substring(0, 2);
+						if (flag.equalsIgnoreCase(("M:"))) {
+							System.out.println("Opponent made move" + out.substring(2));
+						} else if (flag.equalsIgnoreCase(("T:"))) {
+							System.out.println("Opponent says: " + out.substring(2));
+						}
+					}
 				}
 				System.exit(1);
 			} catch (Exception e) {
 				e.printStackTrace();
+				System.exit(1);
 			}
 		}
 	}
 
-	public static class writerThread extends Thread {
+	public class writerThread extends Thread {
 		private PrintWriter out;
 		private BufferedReader stdIn;
 		private Socket client;
@@ -68,12 +87,13 @@ public class ChatClient {
 			try {
 				String userInput;
 				while ((userInput = stdIn.readLine()) != null && !client.isClosed()) {
-					out.println(userInput);
+					out.println("T:"  + userInput);
 					out.flush();
 				}
 				System.exit(1);
 			} catch (Exception e) {
 				e.printStackTrace();
+				System.exit(1);
 			}
 		}
 	}
@@ -86,4 +106,3 @@ public class ChatClient {
 		return color;
 	}
 }
-//TODO update nbrconnected and color

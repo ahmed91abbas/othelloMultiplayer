@@ -23,7 +23,7 @@ public class Server {
 				client = server.accept();
 				String color = nbrOfClients == 0 ? "Black" : "White";
 				nbrOfClients++;
-				new ThreadClient(monitor, client, color).start();
+				new ThreadClient(monitor, client, color, nbrOfClients).start();
 			} catch (IOException e) {
 				System.out.println("Closing the server");
 			}

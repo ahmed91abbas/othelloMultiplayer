@@ -1,6 +1,5 @@
 //package othelloMultiplayer;
 
-import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
 
@@ -12,45 +11,17 @@ public class Monitor {
 	}
 
 	public synchronized void addMsg(String msg, ThreadClient client) {
-		String errorMsg = "Not a supported query!\n";
-		if (msg.length() < 2) {
-			echoMsg(errorMsg, client);
-		} else {
-			String flag = msg.substring(0, 2);
-			if (flag.equalsIgnoreCase(("M:"))) {
-				sendMsg(msg.substring(2), client);
-			} else if (flag.equalsIgnoreCase(("E:"))) {
-				echoMsg(msg.substring(2), client);
-			} else if (flag.equalsIgnoreCase(("Q:"))) {
-				closeConnection(client);
-			} else {
-				echoMsg(errorMsg, client);
-			}
-		}
-	}
-
-	private void closeConnection(ThreadClient client) {
-		client.interrupt();
-		clients.remove(client);
-		System.out.println("Connected clients: " + clients.size());
-	}
-
-	private void echoMsg(String msg, ThreadClient client) {
-		try {
-			Writer out = clients.get(client);
-			out.write(msg + "\n");
-			out.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		sendMsg(msg, client);
 	}
 
 	private void sendMsg(String msg, ThreadClient sender) {
 		try {
 			for (ThreadClient client : clients.keySet()) {
-				Writer out = clients.get(client);
-				out.write(msg + "\n");
-				out.flush();
+				if (!sender.equals(client)) {
+					Writer out = clients.get(client);
+					out.write(msg + "\n");
+					out.flush();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

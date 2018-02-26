@@ -8,11 +8,13 @@ public class ThreadClient extends Thread {
 	private Socket client;
 	private Monitor monitor;
 	private String color;
+	private int nbrConnected;
 
-	public ThreadClient(Monitor monitor, Socket client, String color) {
+	public ThreadClient(Monitor monitor, Socket client, String color, int nbrConnected) {
 		this.client = client;
 		this.monitor = monitor;
 		this.color = color;
+		this.nbrConnected = nbrConnected;
 	}
 
 	@Override
@@ -30,7 +32,11 @@ public class ThreadClient extends Thread {
 		try {
 			Writer out = new OutputStreamWriter(client.getOutputStream()); // out for server
 			BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream(), "UTF-8"));
-			out.write("Connected to " + client.getInetAddress() + "\nYou got the color " + color + "\n");
+			String msg = color + ";" + nbrConnected + ";";
+			out.write(msg);
+			out.flush();
+			msg = "Connected to " + client.getInetAddress() + "\nYou got the color " + color + "\n";
+			out.write(msg);
 			out.flush();
 			monitor.addClient(this, out);
 			

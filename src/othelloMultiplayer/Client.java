@@ -46,14 +46,14 @@ public class Client {
 		panelList[2].add(IPLabel);
 		JTextField IPJta = new JTextField();
 		IPJta.setFont(font);
-		IPJta.setPreferredSize(new Dimension(90, 40));
+		IPJta.setPreferredSize(new Dimension(120, 40));
 		panelList[2].add(IPJta);
 		JLabel portLabel = new JLabel("Port ");
 		portLabel.setFont(font);
 		panelList[3].add(portLabel);
 		JTextField portJta = new JTextField();
 		portJta.setFont(font);
-		portJta.setPreferredSize(new Dimension(90, 40));
+		portJta.setPreferredSize(new Dimension(120, 40));
 		panelList[3].add(portJta);
 
 		JButton startButton = new JButton("Start");
@@ -71,23 +71,24 @@ public class Client {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					dialog.dispose();
-					ChatClient cc = new ChatClient(IPJta.getText(), Integer.parseInt(portJta.getText()));
-					int nbrConnected = cc.getNbrConnected();
-					while (nbrConnected != 2) {
-						Thread.sleep(10);
+//					ChatClient cc = new ChatClient(IPJta.getText(), Integer.parseInt(portJta.getText()));
+					ChatClient cc = new ChatClient("localhost", 30000);
+//					while (cc.getNbrConnected() != 2) {
+//						Thread.sleep(10);
+//					}
+					String color = null;
+					while(color == null) {
+						color = cc.getColor();
 					}
-					String color = cc.getColor();
-					boolean p1 = false;
-					if (color.equals("Black"))
-						p1 = true;
-					othello = new Othello(p1);
-					othello.createField();
-					othello.allowAllMoves(true);
-					othello.makeMove("d5");
-					othello.makeMove("e5");
-					othello.makeMove("e4");
-					othello.makeMove("d4");
-					othello.allowAllMoves(false);
+					boolean p1 = color.equals("Black");
+//					othello = new Othello(p1);
+//					othello.createField();
+//					othello.allowAllMoves(true);
+//					othello.makeMove("d5");
+//					othello.makeMove("e5");
+//					othello.makeMove("e4");
+//					othello.makeMove("d4");
+//					othello.allowAllMoves(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out.println("An error has occurred");
@@ -98,12 +99,16 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
-		Client client = new Client();
-		// System.out.println("starting the test");
-		// ChatClient cc = new ChatClient("localhost", 30000);
-		// cc.sendMsg("test test test");
-		// cc.sendMsg("m: test test test");
-		// cc.sendMsg("e: test test test");
+//		Client client = new Client();
+		try{
+		 System.out.println("starting the test");
+		 ChatClient cc = new ChatClient("localhost", 30000);
+		 cc.sendMsg("test test test");
+		 cc.sendMsg("m: test test test");
+		 cc.sendMsg("e: test test test");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 }
