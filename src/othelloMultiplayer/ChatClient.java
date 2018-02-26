@@ -13,8 +13,10 @@ public class ChatClient {
 	private String color;
 	private int nbrConnected;
 	private boolean firstMsg;
+	private Othello board;
 
 	public ChatClient(String machine, int portNbr) throws UnknownHostException, IOException {
+		board = null;
 		firstMsg = true;
 		color = null;
 		nbrConnected = 0;
@@ -57,7 +59,9 @@ public class ChatClient {
 					else {
 						String flag = out.substring(0, 2);
 						if (flag.equalsIgnoreCase(("M:"))) {
-							System.out.println("Opponent made move" + out.substring(2));
+							String move = out.substring(2);
+							System.out.println("Opponent made move: " + move);
+							board.makeMove(move);
 						} else if (flag.equalsIgnoreCase(("T:"))) {
 							System.out.println("Opponent says: " + out.substring(2));
 						}
@@ -104,5 +108,9 @@ public class ChatClient {
 
 	public String getColor() {
 		return color;
+	}
+	
+	public void setBoard(Othello othello) {
+		board = othello;
 	}
 }

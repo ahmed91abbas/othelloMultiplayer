@@ -9,10 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -31,8 +28,10 @@ public class Othello {
 	private boolean p2;
 	protected boolean gameOver;
 	private boolean resultPrinted;
+	private ChatClient cc;
 
-	public Othello(boolean p1) {
+	public Othello(boolean p1, ChatClient cc) {
+		cc.setBoard(this);
 		turnCount = 0;
 		String str = " abcdefgh ";
 		letters = str.toCharArray();
@@ -48,6 +47,7 @@ public class Othello {
 		this.p1 = p1;
 		p2 = !p1;
 		resultPrinted = false;
+		this.cc = cc;
 	}
 
 	public void allowAllMoves(boolean state) {
@@ -61,6 +61,8 @@ public class Othello {
 		int blackDiscs = black.keySet().size();
 		int whiteDiscs = white.keySet().size();
 		if (succ) {
+			if(!allowAllMoves)
+				cc.sendMsg("m:" + name);
 			String nextPlayer = "";
 			switch (playerID) {
 			case 0:
@@ -354,80 +356,5 @@ public class Othello {
 			turnCount = 0;
 		}
 		updateAvailableMoves();
-	}
-
-	public static void start() {
-		JDialog dialog = new JDialog();
-		dialog.setLocationRelativeTo(null);
-		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		dialog.setTitle("Reversi start menu");
-		JPanel[] panelList = new JPanel[5];
-		Font font = new Font("Serif", Font.PLAIN, 30);
-		for (int i = 0; i < panelList.length; i++) {
-			panelList[i] = new JPanel();
-			panelList[i].setBackground(Color.decode("#E6CFB8"));
-		}
-		JLabel startLabel = new JLabel("*Connect to server*");
-		startLabel.setFont(font);
-		panelList[0].add(startLabel);
-		JLabel chooseColorLabel = new JLabel("Choose color ");
-		chooseColorLabel.setFont(font);
-		String[] colors = new String[] { "Black", "White" };
-		JComboBox<String> box = new JComboBox<String>(colors);
-		box.setFont(font);
-		panelList[1].add(chooseColorLabel);
-		panelList[1].add(box);
-		JLabel IPLabel = new JLabel("IP ");
-		IPLabel.setFont(font);
-		panelList[2].add(IPLabel);
-		JTextField IPJta = new JTextField();
-		IPJta.setFont(font);
-		IPJta.setPreferredSize(new Dimension(90, 40));
-		panelList[2].add(IPJta);
-		JLabel portLabel = new JLabel("Port ");
-		portLabel.setFont(font);
-		panelList[3].add(portLabel);
-		JTextField portJta = new JTextField();
-		portJta.setFont(font);
-		portJta.setPreferredSize(new Dimension(90, 40));
-		panelList[3].add(portJta);
-
-		JButton startButton = new JButton("Start");
-		startButton.setFont(font);
-		panelList[4].add(startButton);
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(5, 1));
-		for (int i = 0; i < panelList.length; i++)
-			panel.add(panelList[i]);
-		dialog.add(panel);
-		dialog.pack();
-		dialog.setVisible(true);
-		startButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					dialog.dispose();
-					String color = (String) box.getSelectedItem();
-					boolean p1 = false;
-					if(color.equals("Black"))
-						p1 = true;
-					Othello othello = new Othello(p1);
-					othello.createField();
-					othello.allowAllMoves(true);
-					othello.makeMove("d5");
-					othello.makeMove("e5");
-					othello.makeMove("e4");
-					othello.makeMove("d4");
-					othello.allowAllMoves(false);
-				} catch (Exception e) {
-					e.printStackTrace();
-					start();
-				}
-			}
-		});
-	}
-
-	public static void main(String[] args) {
-		start();
 	}
 }

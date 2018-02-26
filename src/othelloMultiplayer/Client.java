@@ -81,14 +81,14 @@ public class Client {
 						color = cc.getColor();
 					}
 					boolean p1 = color.equals("Black");
-//					othello = new Othello(p1);
-//					othello.createField();
-//					othello.allowAllMoves(true);
-//					othello.makeMove("d5");
-//					othello.makeMove("e5");
-//					othello.makeMove("e4");
-//					othello.makeMove("d4");
-//					othello.allowAllMoves(false);
+					othello = new Othello(p1, cc);
+					othello.createField();
+					othello.allowAllMoves(true);
+					othello.makeMove("d5");
+					othello.makeMove("e5");
+					othello.makeMove("e4");
+					othello.makeMove("d4");
+					othello.allowAllMoves(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out.println("An error has occurred");
@@ -99,16 +99,16 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
-//		Client client = new Client();
-		try{
-		 System.out.println("starting the test");
-		 ChatClient cc = new ChatClient("localhost", 30000);
-		 cc.sendMsg("test test test");
-		 cc.sendMsg("m: test test test");
-		 cc.sendMsg("e: test test test");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		Client client = new Client();
+//		try{
+//		 System.out.println("starting the test");
+//		 ChatClient cc = new ChatClient("localhost", 30000);
+//		 cc.sendMsg("test test test");
+//		 cc.sendMsg("m: test test test");
+//		 cc.sendMsg("e: test test test");
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
 
 	}
 }
