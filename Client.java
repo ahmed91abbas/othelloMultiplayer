@@ -66,8 +66,7 @@ public class Client {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					dialog.dispose();
-//					ChatClient cc = new ChatClient(IPJta.getText(), Integer.parseInt(portJta.getText()));
-					ChatClient cc = new ChatClient("localhost", 30000);
+					ChatClient cc = new ChatClient(IPJta.getText(), Integer.parseInt(portJta.getText()));
 					if (cc.getNbrConnected() < 2)
 						System.out.println("Waiting for player 2 to connect...");
 					while (cc.getNbrConnected() != 2) {
