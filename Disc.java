@@ -1,5 +1,3 @@
-//package othelloMultiplayer;
-
 public class Disc {
 	private int playerID;
 	private String name;

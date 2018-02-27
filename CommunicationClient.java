@@ -1,6 +1,3 @@
-
-//package othelloMultiplayer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,14 +5,14 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class ChatClient {
+public class CommunicationClient {
 	private PrintWriter out;
 	private String color;
 	private int nbrConnected;
 	private boolean firstMsg;
 	private Othello board;
 
-	public ChatClient(String machine, int portNbr) throws UnknownHostException, IOException {
+	public CommunicationClient(String machine, int portNbr) throws UnknownHostException, IOException {
 		board = null;
 		firstMsg = true;
 		color = null;
@@ -68,7 +65,7 @@ public class ChatClient {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println("Error: Closing the program");
 				System.exit(1);
 			}
 		}
@@ -95,7 +92,7 @@ public class ChatClient {
 				}
 				System.exit(1);
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println("Error: Closing the program");
 				System.exit(1);
 			}
 		}

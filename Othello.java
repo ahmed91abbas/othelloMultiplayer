@@ -1,5 +1,3 @@
-//package othelloMultiplayer;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -28,9 +26,9 @@ public class Othello {
 	private boolean p2;
 	protected boolean gameOver;
 	private boolean resultPrinted;
-	private ChatClient cc;
+	private CommunicationClient cc;
 
-	public Othello(boolean p1, ChatClient cc) {
+	public Othello(boolean p1, CommunicationClient cc) {
 		cc.setBoard(this);
 		turnCount = 0;
 		String str = " abcdefgh ";

@@ -1,5 +1,3 @@
-//package othelloMultiplayer;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -66,7 +64,7 @@ public class Client {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					dialog.dispose();
-					ChatClient cc = new ChatClient(IPJta.getText(), Integer.parseInt(portJta.getText()));
+					CommunicationClient cc = new CommunicationClient(IPJta.getText(), Integer.parseInt(portJta.getText()));
 					if (cc.getNbrConnected() < 2)
 						System.out.println("Waiting for player 2 to connect...");
 					while (cc.getNbrConnected() != 2) {
@@ -86,7 +84,6 @@ public class Client {
 					othello.makeMove("d4");
 					othello.allowAllMoves(false);
 				} catch (Exception e) {
-					e.printStackTrace();
 					System.out.println("An error has occurred");
 					startGUI();
 				}

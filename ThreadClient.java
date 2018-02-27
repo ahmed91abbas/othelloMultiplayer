@@ -1,5 +1,3 @@
-//package othelloMultiplayer;
-
 import java.io.*;
 import java.net.*;
 

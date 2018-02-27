@@ -1,6 +1,3 @@
-
-//package othelloMultiplayer;
-
 import java.io.Writer;
 import java.util.HashMap;
 
