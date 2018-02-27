@@ -24,8 +24,8 @@ public class Client {
 		JDialog dialog = new JDialog();
 		dialog.setLocationRelativeTo(null);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		dialog.setTitle("Reversi start menu");
-		JPanel[] panelList = new JPanel[5];
+		dialog.setTitle("Othello start menu");
+		JPanel[] panelList = new JPanel[4];
 		Font font = new Font("Serif", Font.PLAIN, 30);
 		for (int i = 0; i < panelList.length; i++) {
 			panelList[i] = new JPanel();
@@ -34,33 +34,28 @@ public class Client {
 		JLabel startLabel = new JLabel("*Connect to server*");
 		startLabel.setFont(font);
 		panelList[0].add(startLabel);
-		JLabel chooseColorLabel = new JLabel("Choose color ");
-		chooseColorLabel.setFont(font);
-		String[] colors = new String[] { "Black", "White" };
-		JComboBox<String> box = new JComboBox<String>(colors);
-		box.setFont(font);
-		panelList[1].add(chooseColorLabel);
-		panelList[1].add(box);
 		JLabel IPLabel = new JLabel("IP ");
 		IPLabel.setFont(font);
-		panelList[2].add(IPLabel);
+		IPLabel.setPreferredSize(new Dimension(70, 40));
+		panelList[1].add(IPLabel);
 		JTextField IPJta = new JTextField();
 		IPJta.setFont(font);
-		IPJta.setPreferredSize(new Dimension(120, 40));
-		panelList[2].add(IPJta);
+		IPJta.setPreferredSize(new Dimension(220, 40));
+		panelList[1].add(IPJta);
 		JLabel portLabel = new JLabel("Port ");
 		portLabel.setFont(font);
-		panelList[3].add(portLabel);
+		portLabel.setPreferredSize(new Dimension(70, 40));
+		panelList[2].add(portLabel);
 		JTextField portJta = new JTextField();
 		portJta.setFont(font);
-		portJta.setPreferredSize(new Dimension(120, 40));
-		panelList[3].add(portJta);
+		portJta.setPreferredSize(new Dimension(220, 40));
+		panelList[2].add(portJta);
 
 		JButton startButton = new JButton("Start");
 		startButton.setFont(font);
-		panelList[4].add(startButton);
+		panelList[3].add(startButton);
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(5, 1));
+		panel.setLayout(new GridLayout(4, 1));
 		for (int i = 0; i < panelList.length; i++)
 			panel.add(panelList[i]);
 		dialog.add(panel);

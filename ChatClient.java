@@ -58,7 +58,7 @@ public class ChatClient {
 						String flag = out.substring(0, 2);
 						if (flag.equalsIgnoreCase(("M:"))) {
 							String move = out.substring(2);
-							System.out.println("Opponent made move: " + move);
+							System.out.println("Last move made: " + move);
 							board.makeMove(move);
 						} else if (flag.equalsIgnoreCase(("T:"))) {
 							System.out.println("Opponent says: " + out.substring(2));
